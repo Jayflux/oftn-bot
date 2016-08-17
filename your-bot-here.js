@@ -1,5 +1,6 @@
 var Util = require("util");
 var Bot = require("./lib/irc");
+var heapdump = require("heapdump");
 
 var YourBot = function(profile) {
 	Bot.call(this, profile);
@@ -19,6 +20,7 @@ YourBot.prototype.init = function() {
 
 YourBot.prototype.ping = function(cx, text) {
 	cx.channel.send_reply (cx.sender, "Pong!");
+	heapdump.writeSnapshot(Date.now() + '.heapsnapshot');
 };
 
 YourBot.prototype.unrecognized = function(cx, text) {
@@ -32,7 +34,7 @@ var profile = [{
 	password: "password_to_authenticate",
 	user: "username",
 	real: "Real Name",
-	channels: ["#channels", "#to", "#join"]
+	channels: ["#web-testing"]
 }];
 
 (new YourBot(profile)).init();
